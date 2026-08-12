@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flood Risk Prediction</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">~</span>
+      <span>flood-risk<span class="accent">.predict()</span></span>
+    </div>
+    <span class="tag">Random Forest · runs 100% in your browser</span>
+  </header>
+
+  <main class="wrap">
+    <section class="intro" id="intro-section">
+      <h1>Estimate flood risk from live ground conditions</h1>
+      <p>Enter the readings below and the model will classify the area as
+        <span class="pill low">Low</span>
+        <span class="pill medium">Medium</span>
+        <span class="pill high">High</span> risk — no server, prediction runs
+        entirely in JavaScript.</p>
+    </section>
+
+    <div id="error-box" class="alert" style="display:none;"></div>
+
+    <form class="card form-grid" id="predict-form">
+      <div class="field">
+        <label for="rainfall_mm">Rainfall (last 24h, mm)</label>
+        <input type="number" step="any" id="rainfall_mm" min="0" max="500" placeholder="0 – 500" required>
+      </div>
+      <div class="field">
+        <label for="water_level_m">River Water Level (m)</label>
+        <input type="number" step="any" id="water_level_m" min="0" max="15" placeholder="0 – 15" required>
+      </div>
+      <div class="field">
+        <label for="river_discharge_cms">River Discharge (m³/s)</label>
+        <input type="number" step="any" id="river_discharge_cms" min="0" max="2000" placeholder="0 – 2000" required>
+      </div>
+      <div class="field">
+        <label for="temperature_c">Temperature (°C)</label>
+        <input type="number" step="any" id="temperature_c" min="-10" max="55" placeholder="-10 – 55" required>
+      </div>
+      <div class="field">
+        <label for="humidity_pct">Humidity (%)</label>
+        <input type="number" step="any" id="humidity_pct" min="0" max="100" placeholder="0 – 100" required>
+      </div>
+      <div class="field">
+        <label for="soil_moisture_pct">Soil Moisture (%)</label>
+        <input type="number" step="any" id="soil_moisture_pct" min="0" max="100" placeholder="0 – 100" required>
+      </div>
+      <div class="field">
+        <label for="elevation_m">Elevation (m)</label>
+        <input type="number" step="any" id="elevation_m" min="0" max="3000" placeholder="0 – 3000" required>
+      </div>
+      <div class="field">
+        <label for="drainage_quality">Drainage Quality (1=poor, 5=excellent)</label>
+        <input type="number" step="1" id="drainage_quality" min="1" max="5" placeholder="1 – 5" required>
+      </div>
+      <div class="field">
+        <label for="historical_floods_5yr">Floods in Last 5 Years</label>
+        <input type="number" step="1" id="historical_floods_5yr" min="0" max="10" placeholder="0 – 10" required>
+      </div>
+      <div class="field">
+        <label for="population_density">Population Density (people/km²)</label>
+        <input type="number" step="any" id="population_density" min="0" max="20000" placeholder="0 – 20000" required>
+      </div>
+
+      <button type="submit" class="submit-btn">Predict Risk →</button>
+    </form>
+
+    <section class="result-card" id="result-card" style="display:none;">
+      <span class="risk-label">Predicted Risk</span>
+      <h1 class="risk-value" id="risk-value">—</h1>
+      <span class="confidence" id="confidence-text">—</span>
+
+      <div class="prob-bars" id="prob-bars"></div>
+    </section>
+
+    <div class="actions" id="result-actions" style="display:none;">
+      <button class="submit-btn" onclick="window.print()">Download / Print Report</button>
+      <button class="submit-btn ghost" id="reset-btn">Run Another Prediction</button>
+    </div>
+
+    <footer class="foot">
+      Built as a portfolio ML project · dataset is synthetic, generated for demonstration ·
+      <a href="https://github.com/harviesharma05-tech/flood-risk-prediction" style="color:inherit;">source on GitHub</a>
+    </footer>
+  </main>
+
+  <script src="model.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
