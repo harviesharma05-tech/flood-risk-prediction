@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prediction Result</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%8A%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">~</span>
+      <span>flood-risk<span class="accent">.predict()</span></span>
+    </div>
+    <a href="/" class="tag link">← new prediction</a>
+  </header>
+
+  <main class="wrap">
+    <section class="result-card" style="--risk-color: {{ color }}">
+      <span class="risk-label">Predicted Risk</span>
+      <h1 class="risk-value">{{ risk_level }}</h1>
+      <span class="confidence">{{ confidence }}% model confidence</span>
+
+      <div class="prob-bars">
+        {% for cls, pct in probabilities.items() %}
+        <div class="prob-row">
+          <span class="prob-name">{{ cls }}</span>
+          <div class="prob-track">
+            <div class="prob-fill" style="width: {{ pct }}%;"></div>
+          </div>
+          <span class="prob-pct">{{ pct }}%</span>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">Input Snapshot</h2>
+      <div class="snapshot-grid">
+        {% for key, label, low, high in fields %}
+        <div class="snap-item">
+          <span class="snap-label">{{ label }}</span>
+          <span class="snap-value">{{ inputs[key] }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <div class="actions">
+      <button class="submit-btn" onclick="window.print()">Download / Print Report</button>
+      <a href="/" class="submit-btn ghost">Run Another Prediction</a>
+    </div>
+
+    <footer class="foot">
+      Built as a portfolio ML project · dataset is synthetic, generated for demonstration
+    </footer>
+  </main>
+
+</body>
+</html>
